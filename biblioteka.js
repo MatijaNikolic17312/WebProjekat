@@ -1,3 +1,5 @@
+import { Polica } from "./polica.js";
+
 export class Biblioteka
 {
     constructor(id, ime, adresa)
@@ -7,6 +9,9 @@ export class Biblioteka
         this.adresa = adresa;
         this.police = new Array();
         this.div = null;
+
+        //this.dodajPolice(new Polica("A"));
+        //this.dodajPolice(new Polica("B"));
     }
 
     crtajBiblioteku(host)
@@ -21,7 +26,54 @@ export class Biblioteka
         elNaslov.innerHTML = `${this.ime}, ${this.adresa}`;
         this.div.appendChild(elNaslov);
 
+        //crtanje dodvanja police
+        let btnDodajPolicu = document.createElement("button");
+        btnDodajPolicu.innerHTML = "+ Polica";
+        btnDodajPolicu.onclick = (ev) =>
+        {
+            let slovo = prompt("Slovo police");
+            //console.log(slovo);
+
+            if(slovo.length != 1 || /\d/.test(slovo))
+            {
+                alert("SAMO JEDNO SLOVO PLS i bez brojeva pls!");
+                return;
+            }
+
+            if(this.police.find((el) => {return el.slovo == slovo}) != null)
+            {
+                alert ("VEC IMAS JENDOG SUKLENDZO!");
+                return;
+            }
+
+            let novaPolica = new Polica(slovo);
+            //console.log(novaPolica);
+            novaPolica.biblioteka = this;
+            this.dodajPolice(novaPolica);
+            novaPolica.crtajPolicu(divPolice);
+
+            if(this.police.length == 5)
+                btnDodajPolicu.classList.add("nestani");
+
+        }
+        this.div.appendChild(btnDodajPolicu);
+
         //crtanje div-a za police
+        let divPolice = document.createElement("div");
+        divPolice.classList.add("divPolice");
+        this.div.appendChild(divPolice);
+
+        this.police.forEach(el => 
+        {
+            el.crtajPolicu(divPolice);
+        });
+
         
+    }
+
+    dodajPolice(polica)
+    {
+        this.police.push(polica);
+        //this.police.forEach((el) => {console.log(el)});
     }
 }
