@@ -1,10 +1,12 @@
 export class Polica
 {
-    constructor(slovo)
+    constructor(id, slovo)
     {
+        this.id = id;
         this.slovo = slovo;
         this.div = null;
         this.biblioteka = null;
+        this.knjige = new Array();
     }
 
     crtajPolicu(host)
@@ -14,6 +16,7 @@ export class Polica
         this.div.innerHTML = this.slovo;
         host.appendChild(this.div);
 
+        //dugme za brisanje
         let dugmeZaBrisanje = document.createElement("button");
         dugmeZaBrisanje.innerHTML = "BRISI KUCKO BRISI";
         this.div.appendChild(dugmeZaBrisanje);
@@ -41,11 +44,50 @@ export class Polica
             }
 
             this.div.parentNode.removeChild(this.div);
-
-            
-
-
         }
+
+        //div za formu za knjige
+        let divZaFormuKnjige = document.createElement("div");
+        divZaFormuKnjige.classList.add("divFormKnjige");
+        this.div.appendChild(divZaFormuKnjige);
+
+        let divZaLabele = document.createElement("div");
+        divZaLabele.classList.add("divZaLabele");
+        divZaFormuKnjige.appendChild(divZaLabele);
+
+        let divZaInpute= document.createElement("div");
+        divZaInpute.classList.add("divZaInpute");
+        divZaFormuKnjige.appendChild(divZaInpute);
+
+        let txtLabele = ["Naslov", "Autor", "Godina izdanja", "Slika"];
+
+        txtLabele.forEach((el, index) => 
+        {   
+            let labela = document.createElement("label");
+            labela.innerHTML = el;
+            divZaLabele.appendChild(labela);
+
+            let polje = document.createElement("input");
+            if(el === "Godina izdanja")
+            {
+                polje.type = "number"
+            }
+            divZaInpute.appendChild(polje);
+        });
+
+        let dugmeZaDodavanjeKnjige = document.createElement("button");
+        dugmeZaDodavanjeKnjige.innerHTML = "Dodaj knjigu";
+        dugmeZaDodavanjeKnjige.classList.add("btnDodajKnjigu");
+        divZaInpute.appendChild(dugmeZaDodavanjeKnjige);
+
+        let divZaKnjige = document.createElement("div");
+        divZaKnjige.classList.add("divZaKnjige");
+        divZaKnjige.innerHTML = "test0";
+        this.div.appendChild(divZaKnjige);
+
+        
+
+        
         
     }
 }

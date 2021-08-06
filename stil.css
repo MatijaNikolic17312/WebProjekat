@@ -21,6 +21,31 @@ body
     width: 100%;
 }
 
+.divFormKnjige
+{
+    border: 1px solid greenyellow;
+    margin: 1px;
+    display: flex;
+}
+
+.divZaLabele, .divZaInpute
+{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    font-size: medium;
+}
+
+input
+{
+    font-size: medium;
+}
+
+.divZaLabele
+{
+    align-items: flex-end;
+}
+
 .polica
 {
     border: 1px solid blue;
@@ -28,6 +53,11 @@ body
     flex-basis: 50px;
     margin: 1px;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.divZaKnjige
+{
+    border: 1px solid black;
 }
 
 button
@@ -38,5 +68,10 @@ button
 .nestani
 {
     display: none;
+}
+
+.btnDodajKnjigu
+{
+    align-self: center;
 }
 

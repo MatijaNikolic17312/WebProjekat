@@ -46,7 +46,7 @@ export class Biblioteka
                 return;
             }
 
-            let novaPolica = new Polica(slovo);
+            let novaPolica = new Polica(-1, slovo);
             //console.log(novaPolica);
             novaPolica.biblioteka = this;
             this.dodajPolice(novaPolica);
