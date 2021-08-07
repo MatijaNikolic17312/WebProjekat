@@ -28,7 +28,7 @@ export class Biblioteka
 
         //crtanje dodvanja police
         let btnDodajPolicu = document.createElement("button");
-        btnDodajPolicu.innerHTML = "+ Polica";
+        btnDodajPolicu.innerHTML = "➕";
         btnDodajPolicu.onclick = (ev) =>
         {
             let slovo = prompt("Slovo police");

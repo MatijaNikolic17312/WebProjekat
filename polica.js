@@ -1,3 +1,5 @@
+import { Knjiga } from "./knjiga.js";
+
 export class Polica
 {
     constructor(id, slovo)
@@ -18,28 +20,19 @@ export class Polica
 
         //dugme za brisanje
         let dugmeZaBrisanje = document.createElement("button");
-        dugmeZaBrisanje.innerHTML = "BRISI KUCKO BRISI";
+        dugmeZaBrisanje.innerHTML = "🗑️";
         this.div.appendChild(dugmeZaBrisanje);
         dugmeZaBrisanje.onclick = (ev) =>
         {
-            // this.biblioteka.police.forEach(element => 
-            // {
-            //     console.log(element);    
-            // });
-
             let zaBrisanje = this.biblioteka.police.find((el) => 
             {
                 return el.slovo == this.slovo;
             });
-            //console.log(zaBrisanje);
-
+ 
             this.biblioteka.police = this.biblioteka.police.filter((el) => {return el.slovo != zaBrisanje.slovo });
-
-            //console.log(this.div.parentNode);
 
             if(this.biblioteka.police.length < 5)
             {
-                //console.log(this.div.parentNode);
                 this.div.parentNode.parentNode.querySelector("button").classList.remove("nestani");
             }
 
@@ -51,16 +44,18 @@ export class Polica
         divZaFormuKnjige.classList.add("divFormKnjige");
         this.div.appendChild(divZaFormuKnjige);
 
+        //div za labele
         let divZaLabele = document.createElement("div");
         divZaLabele.classList.add("divZaLabele");
         divZaFormuKnjige.appendChild(divZaLabele);
 
+        //div za input polja
         let divZaInpute= document.createElement("div");
         divZaInpute.classList.add("divZaInpute");
         divZaFormuKnjige.appendChild(divZaInpute);
 
+        //popunjavanje inputa
         let txtLabele = ["Naslov", "Autor", "Godina izdanja", "Slika"];
-
         txtLabele.forEach((el, index) => 
         {   
             let labela = document.createElement("label");
@@ -69,9 +64,9 @@ export class Polica
 
             let polje = document.createElement("input");
             if(el === "Godina izdanja")
-            {
                 polje.type = "number"
-            }
+            
+            polje.name = el;
             divZaInpute.appendChild(polje);
         });
 
@@ -79,15 +74,37 @@ export class Polica
         dugmeZaDodavanjeKnjige.innerHTML = "Dodaj knjigu";
         dugmeZaDodavanjeKnjige.classList.add("btnDodajKnjigu");
         divZaInpute.appendChild(dugmeZaDodavanjeKnjige);
+        dugmeZaDodavanjeKnjige.onclick = (ev) => 
+        {
+            let unetoNaslov = divZaInpute.querySelector("input[name='Naslov']").value;
+            let unetoAutor = divZaInpute.querySelector("input[name='Autor']").value;
+            let unetaGodina = parseInt(divZaInpute.querySelector("input[name='Godina izdanja']").value);
+            let unetaSlika = divZaInpute.querySelector("input[name='Slika']").value;
+            
+            let novaKnjiga = new Knjiga(-1, unetoNaslov, unetoAutor, unetaSlika, unetaGodina);
+            novaKnjiga.polica = this;
+            novaKnjiga.crtajKnjigu(divZaKnjige);
+            this.dodajKnjigu(novaKnjiga);
+        };
 
+        //div za knjige
         let divZaKnjige = document.createElement("div");
         divZaKnjige.classList.add("divZaKnjige");
-        divZaKnjige.innerHTML = "test0";
         this.div.appendChild(divZaKnjige);
 
+        this.knjige.forEach((el) => 
+        {
+            el.crtajKnjigu(divZaKnjige);
+        });
+
         
 
         
         
+    }
+
+    dodajKnjigu(knjiga)
+    {
+        this.knjige.push(knjiga);
     }
 }

@@ -58,6 +58,8 @@ input
 .divZaKnjige
 {
     border: 1px solid black;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 button
@@ -73,5 +75,29 @@ button
 .btnDodajKnjigu
 {
     align-self: center;
+}
+
+
+.slika
+{
+    width: 100px;
+}
+
+.divKnjiga
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid chocolate;
+    margin: 5px;
+    flex-basis: 20%;
+    flex-grow: 0;
+}
+
+h4, p
+{
+    margin: 1px;
+    word-wrap: break-word;
+    text-align: center;
 }
 
