@@ -60,6 +60,7 @@ input
     border: 1px solid black;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 button
@@ -72,7 +73,7 @@ button
     display: none;
 }
 
-.btnDodajKnjigu
+.btnDodajKnjigu, .btnAzurirajKnjigu
 {
     align-self: center;
 }
@@ -81,6 +82,7 @@ button
 .slika
 {
     width: 100px;
+    margin: 1px;
 }
 
 .divKnjiga
@@ -90,7 +92,7 @@ button
     align-items: center;
     border: 1px solid chocolate;
     margin: 5px;
-    flex-basis: 20%;
+    flex-basis: 19.2%;
     flex-grow: 0;
 }
 
@@ -99,5 +101,11 @@ h4, p
     margin: 1px;
     word-wrap: break-word;
     text-align: center;
+}
+
+.divZaDugmad
+{
+    display: flex;
+    margin: 2px;
 }
 

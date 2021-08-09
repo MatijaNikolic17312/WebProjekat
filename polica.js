@@ -5,10 +5,29 @@ export class Polica
     constructor(id, slovo)
     {
         this.id = id;
-        this.slovo = slovo;
+        this.slovo = slovo[0].toUpperCase();
         this.div = null;
         this.biblioteka = null;
         this.knjige = new Array();
+    }
+
+
+    jelMogucUpis(unetNaslov)
+    {
+        if(this.biblioteka.brojKnjiga <= this.biblioteka.ukupanBrojKnjiga())
+        {
+            alert("Puna biblioteka, kapacitet je " + this.biblioteka.brojKnjiga);
+            return false;
+        }
+
+        if(unetNaslov[0].toUpperCase() !== this.slovo)
+        {
+            alert("Na ovoj polici samo ređamo knjige koje počinju na slovo " + this.slovo);
+            return false;
+        }
+
+        return true;
+
     }
 
     crtajPolicu(host)
@@ -76,15 +95,68 @@ export class Polica
         divZaInpute.appendChild(dugmeZaDodavanjeKnjige);
         dugmeZaDodavanjeKnjige.onclick = (ev) => 
         {
+            // if(this.biblioteka.brojKnjiga <= this.biblioteka.ukupanBrojKnjiga())
+            // {
+            //     alert("Puna biblioteka, kapacitet je " + this.biblioteka.brojKnjiga);
+            //     return;
+            // }
+
             let unetoNaslov = divZaInpute.querySelector("input[name='Naslov']").value;
+
+            //console.log(this.jelMogucUpis(unetoNaslov));
+
+            if(this.jelMogucUpis(unetoNaslov) === false)
+            {
+                //console.log("uso");
+                return;
+            }
+
             let unetoAutor = divZaInpute.querySelector("input[name='Autor']").value;
             let unetaGodina = parseInt(divZaInpute.querySelector("input[name='Godina izdanja']").value);
             let unetaSlika = divZaInpute.querySelector("input[name='Slika']").value;
             
-            let novaKnjiga = new Knjiga(-1, unetoNaslov, unetoAutor, unetaSlika, unetaGodina);
+            let novaKnjiga = new Knjiga(-1, `${unetoNaslov[0].toUpperCase()}${unetoNaslov.slice(1)}`, unetoAutor, unetaSlika, unetaGodina);
             novaKnjiga.polica = this;
             novaKnjiga.crtajKnjigu(divZaKnjige);
             this.dodajKnjigu(novaKnjiga);
+            this.resetujFormu(divZaInpute);
+            
+        };
+
+        let dugmeZaAzuriranjeKnjige = document.createElement("button");
+        dugmeZaAzuriranjeKnjige.innerHTML = "Azuriraj knjigu";
+        dugmeZaAzuriranjeKnjige.classList.add("btnAzurirajKnjigu");
+        dugmeZaAzuriranjeKnjige.classList.add("nestani");
+        divZaInpute.appendChild(dugmeZaAzuriranjeKnjige);
+        dugmeZaAzuriranjeKnjige.onclick = (ev) => 
+        {
+            dugmeZaAzuriranjeKnjige.classList.add("nestani");
+            dugmeZaDodavanjeKnjige.classList.remove("nestani");
+
+            //console.log(dugmeZaAzuriranjeKnjige.stariNaslov);
+            //console.log(this.knjige);
+
+            let zaMenjanje = this.knjige.find(el => {return el.naslov === dugmeZaAzuriranjeKnjige.stariNaslov});
+
+            if(this.jelMogucUpis(divZaInpute.querySelector("input[name='Naslov']").value) === false)
+            {
+                this.resetujFormu(host);
+                return;
+            }
+
+            zaMenjanje.naslov = divZaInpute.querySelector("input[name='Naslov']").value;
+
+            
+
+            zaMenjanje.autor = divZaInpute.querySelector("input[name='Autor']").value;
+            zaMenjanje.godinaIzdanja = parseInt(divZaInpute.querySelector("input[name='Godina izdanja']").value);
+            zaMenjanje.slika = divZaInpute.querySelector("input[name='Slika']").value;
+            
+            //console.log(zaMenjanje);
+
+            zaMenjanje.azurirajKnjigu();
+
+            this.resetujFormu(host);
         };
 
         //div za knjige
@@ -97,14 +169,20 @@ export class Polica
             el.crtajKnjigu(divZaKnjige);
         });
 
-        
+    }
 
-        
-        
+    resetujFormu(host)
+    {
+        let txtLabele = ["Naslov", "Autor", "Godina izdanja", "Slika"];
+        txtLabele.forEach(el =>
+        {
+            host.querySelector(`input[name='${el}']`).value = null;
+        });
     }
 
     dodajKnjigu(knjiga)
     {
         this.knjige.push(knjiga);
+        //console.log("UPisana");
     }
 }

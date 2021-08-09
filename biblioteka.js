@@ -2,13 +2,14 @@ import { Polica } from "./polica.js";
 
 export class Biblioteka
 {
-    constructor(id, ime, adresa)
+    constructor(id, ime, adresa, brojKnjiga)
     {
         this.id = id;
         this.ime = ime;
         this.adresa = adresa;
         this.police = new Array();
         this.div = null;
+        this.brojKnjiga = brojKnjiga;
 
         //this.dodajPolice(new Polica("A"));
         //this.dodajPolice(new Polica("B"));
@@ -75,5 +76,17 @@ export class Biblioteka
     {
         this.police.push(polica);
         //this.police.forEach((el) => {console.log(el)});
+    }
+
+    ukupanBrojKnjiga()
+    {
+        let ukupno = 0;
+        this.police.forEach(el =>
+        {
+            ukupno += el.knjige.length;
+        });
+
+        //console.log("Ukupno u biblioteci ima " + ukupno + "knjiga");
+        return ukupno;
     }
 }
