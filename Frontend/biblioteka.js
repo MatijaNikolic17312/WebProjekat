@@ -10,9 +10,6 @@ export class Biblioteka
         this.police = new Array();
         this.div = null;
         this.brojKnjiga = brojKnjiga;
-
-        //this.dodajPolice(new Polica("A"));
-        //this.dodajPolice(new Polica("B"));
     }
 
     crtajBiblioteku(host)
@@ -33,28 +30,50 @@ export class Biblioteka
         btnDodajPolicu.onclick = (ev) =>
         {
             let slovo = prompt("Slovo police");
-            //console.log(slovo);
-
+            slovo = slovo[0].toUpperCase();
+            
+            //provera da li je uneto samo jedno slovo
             if(slovo.length != 1 || /\d/.test(slovo))
             {
-                alert("SAMO JEDNO SLOVO PLS i bez brojeva pls!");
+                alert("Molimo Vas unesite samo jedno slovo, i da uneti karakter nije broj");
                 return;
             }
 
+            //provera da li se slucajno ne dodaje polica sa vec postojecim slovom
             if(this.police.find((el) => {return el.slovo == slovo}) != null)
             {
-                alert ("VEC IMAS JENDOG SUKLENDZO!");
+                alert ("Vec postoji polica sa tim slovom");
                 return;
             }
 
-            let novaPolica = new Polica(-1, slovo);
-            //console.log(novaPolica);
-            novaPolica.biblioteka = this;
-            this.dodajPolice(novaPolica);
-            novaPolica.crtajPolicu(divPolice);
+            let dodeljenID = -1;
 
-            if(this.police.length == 5)
-                btnDodajPolicu.classList.add("nestani");
+            //HTTP Request
+            fetch("https://localhost:5001/Biblioteka/DodajPolicu/" + this.id, 
+            {
+                method: "POST",
+                headers: {"Content-Type" : "application/json"},
+                body: JSON.stringify({slovo: slovo})
+            }).then(p => 
+            {
+                if(p.ok)
+                {
+                    p.json().then(q => 
+                    {
+                        dodeljenID = q.dodeljenId; 
+                        let novaPolica = new Polica(dodeljenID, slovo);
+                        console.log(novaPolica);
+                        novaPolica.biblioteka = this;
+                        this.dodajPolice(novaPolica);
+                        novaPolica.crtajPolicu(divPolice);
+
+                        if(this.police.length == 5)
+                            btnDodajPolicu.classList.add("nestani");
+                    });
+                    
+
+                }
+            });
 
         }
         this.div.appendChild(btnDodajPolicu);
@@ -64,6 +83,7 @@ export class Biblioteka
         divPolice.classList.add("divPolice");
         this.div.appendChild(divPolice);
 
+        //iscrtavanje polica
         this.police.forEach(el => 
         {
             el.crtajPolicu(divPolice);
@@ -75,7 +95,6 @@ export class Biblioteka
     dodajPolice(polica)
     {
         this.police.push(polica);
-        //this.police.forEach((el) => {console.log(el)});
     }
 
     ukupanBrojKnjiga()
@@ -85,8 +104,6 @@ export class Biblioteka
         {
             ukupno += el.knjige.length;
         });
-
-        //console.log("Ukupno u biblioteci ima " + ukupno + "knjiga");
         return ukupno;
     }
 }

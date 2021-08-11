@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Backend.Models
 {
@@ -26,7 +27,11 @@ namespace Backend.Models
         [Column("GodinaIzdanja")]
         public int GodinaIzdanja {get; set;}
 
-        
+        [Column("Boja")]
+        [MaxLength(30)]
+        public string KategorijaBoja {get; set;}
+
+        [JsonIgnore]
         public Polica PripadaPolica {get; set;}
     }
 }

@@ -13,5 +13,11 @@ namespace Backend.Models
         {
 
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Polica>().HasMany(p => p.Knjige).WithOne(x => x.PripadaPolica).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Knjiga>().HasOne(p => p.PripadaPolica).WithMany(x => x.Knjige);
+        }
     }
 }

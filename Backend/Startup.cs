@@ -38,6 +38,11 @@ namespace Backend
             {
                 opcije.UseSqlServer(Configuration.GetConnectionString("BiblCS"));
             });
+            services.AddCors(opcije => {
+                opcije.AddPolicy("CORS", gradjevinar => {
+                    gradjevinar.AllowAnyHeader().AllowAnyMethod().WithOrigins(new string[] {"http://127.0.0.1:5500"});
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +58,8 @@ namespace Backend
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("CORS");
 
             app.UseAuthorization();
 

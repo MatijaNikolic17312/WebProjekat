@@ -109,3 +109,12 @@ h4, p
     margin: 2px;
 }
 
+.divZaRadioDugmad
+{
+    display: flex;
+}
+
+.labelaZaRadioDugmad
+{
+    margin-right: 2px;
+}
