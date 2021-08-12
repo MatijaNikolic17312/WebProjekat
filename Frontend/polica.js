@@ -111,7 +111,7 @@ export class Polica
 
         //Kategorije, odgovarajuce boje, iscrtavanje istih
         let txtKategorije = ["Beletristika", "Drama", "Horor", "Dečije", "Ostalo"];
-        let txtBoje = ["green", "red", "purple", "blue", "orange"];
+        let txtBoje = ["green", "red", "purple", "#0000ff63", "orange"];
         txtKategorije.forEach((el, i) => 
         {
             let radioDugme = document.createElement("input");
