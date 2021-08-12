@@ -14,8 +14,7 @@ namespace Backend.Controllers
     [Route("[controller]")]
     public class BibliotekaController : ControllerBase
     {
-
-        public BibliotekaContext Kontekst {get; set;}
+        public BibliotekaContext Kontekst { get; set; }
 
         public BibliotekaController(BibliotekaContext kontekst)
         {
@@ -24,13 +23,13 @@ namespace Backend.Controllers
 
         [HttpPost]
         [Route("DodajPolicu/{idBibl}")]
-        public async Task<IActionResult> DodajPolicu([FromRoute(Name ="idBibl")] int idBiblioteke, [FromBody] Polica nova)
+        public async Task<IActionResult> DodajPolicu([FromRoute(Name = "idBibl")] int idBiblioteke, [FromBody] Polica nova)
         {
             Biblioteka bibl = await Kontekst.Biblioteke.FindAsync(idBiblioteke);
             nova.PripadaBiblioteci = bibl;
             Kontekst.Police.Add(nova);
             await Kontekst.SaveChangesAsync();
-            return Ok(new {dodeljenId = nova.Id});
+            return Ok(new { dodeljenId = nova.Id });
         }
 
         [HttpDelete]
@@ -46,9 +45,7 @@ namespace Backend.Controllers
         [Route("VratiBiblioteke")]
         public async Task<List<Biblioteka>> VratiBiblioteke()
         {
-            
             return await Kontekst.Biblioteke.Include(x => x.Police).ThenInclude(y => y.Knjige).ToListAsync();
-
         }
 
         [HttpPost]
@@ -59,8 +56,7 @@ namespace Backend.Controllers
             nova.PripadaPolica = tmp;
             Kontekst.Knjige.Add(nova);
             await Kontekst.SaveChangesAsync();
-            return Ok(new {dodeljenId = nova.Id});
-
+            return Ok(new { dodeljenId = nova.Id });
         }
 
         [HttpPut]
@@ -69,7 +65,6 @@ namespace Backend.Controllers
         {
             Kontekst.Knjige.Update(izmena);
             await Kontekst.SaveChangesAsync();
-
         }
 
         [HttpDelete]
@@ -80,6 +75,6 @@ namespace Backend.Controllers
             Kontekst.Knjige.Remove(zaBrisanje);
             await Kontekst.SaveChangesAsync();
         }
-        
+
     }
 }

@@ -22,7 +22,6 @@ namespace Backend.Models
         [Column("BrojKnjiga")]
         public int BrojKnjiga {get; set;}
 
-
         public virtual List<Polica> Police {get; set;}
     }
 }

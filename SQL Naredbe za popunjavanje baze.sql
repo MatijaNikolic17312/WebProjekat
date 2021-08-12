@@ -1,0 +1,2 @@
+INSERT into [BibliotekaDB].[dbo].[Biblioteka] (Ime, Adresa, BrojKnjiga) VALUES ('Nikola Tesla', 'Kej Mike Paligorica 11', 10);
+INSERT into [BibliotekaDB].[dbo].[Biblioteka] (Ime, Adresa, BrojKnjiga) VALUES ('Stevan Sremac', 'Borivoja Gojkovica 25', 20);
