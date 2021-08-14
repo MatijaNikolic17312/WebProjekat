@@ -2,6 +2,9 @@ import { Biblioteka } from "./biblioteka.js";
 import { Knjiga } from "./knjiga.js";
 import { Polica } from "./polica.js";
 
+let naslov = document.createElement("title");
+naslov.innerHTML = "Biblioteke - Matija Nikolić 17312";
+document.head.appendChild(naslov);
 
 fetch("https://localhost:5001/Biblioteka/VratiBiblioteke").then(p=>
 {
