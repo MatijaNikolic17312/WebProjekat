@@ -46,6 +46,9 @@ export class Polica
         dugmeZaBrisanje.onclick = (ev) =>
         {
 
+            if(confirm("Da li ste sigurni da želite da brišete policu?") == false)
+                return;
+
             //HTTP Request
             fetch("https://localhost:5001/Biblioteka/BrisiPolicu/" + this.id, 
             {

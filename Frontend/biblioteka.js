@@ -19,10 +19,15 @@ export class Biblioteka
         this.div.classList.add("divBiblioteka");
         host.appendChild(this.div);
         
+        
         //crtanje naslova
         let elNaslov = document.createElement("h2");
         elNaslov.innerHTML = `${this.ime}, ${this.adresa}`;
         this.div.appendChild(elNaslov);
+        elNaslov.onmouseover = (ev) => 
+        {
+            elNaslov.title = `${this.ime}, ${this.adresa}\nBroj knjiga: ${this.ukupanBrojKnjiga()}/${this.brojKnjiga}`;
+        };
 
         //crtanje dodvanja police
         let btnDodajPolicu = document.createElement("button");

@@ -51,6 +51,9 @@ export class Knjiga
         divZaDugamd.appendChild(dugmenceZaBrisanje);
         dugmenceZaBrisanje.onclick = (ev) =>
         {
+            if(confirm("Da li ste sigurni da želite da brišete knjigu?") == false)
+                return;
+
             //HTTP Request
             fetch("https://localhost:5001/Biblioteka/BrisiKnjigu/" + this.id, {method:"DELETE"}).then(p=>
             {
@@ -80,7 +83,7 @@ export class Knjiga
                 this.div.parentNode.parentNode.querySelector(`input[name='${el}']`).value = tmp[index];
                 
             });
-            this.div.parentNode.parentNode.querySelector(`input[name='Kategorija'][value=${zaMenjanje.kategorijaBoja}]`).checked = true;
+            this.div.parentNode.parentNode.querySelector(`input[name='Kategorija'][value='${zaMenjanje.kategorijaBoja}']`).checked = true;
 
             //prikaz odgovarajuceg dugmeta
             this.div.parentNode.parentNode.querySelector(".btnDodajKnjigu").classList.add("nestani");
